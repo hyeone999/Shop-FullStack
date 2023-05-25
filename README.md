@@ -6,13 +6,13 @@
 
 ### 백엔드
 
-- mongoDB
-- mongoose
-- express JS
+- MongoDB
+- Mongoose
+- Express
 - JWT
 
 ### 프론트엔드
 
 - React
-- typescript
+- Typescript
 - Redux
