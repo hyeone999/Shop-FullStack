@@ -15,13 +15,21 @@ mongoose
   .then(() => console.log("연결 완료"))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("안녕하세요, 111");
+app.get("/", (req, res, next) => {
+  setImmediate(() => {
+    next(new Error("Error response"));
+  });
+  // res.send("안녕하세요, 111");
 });
 
 app.post("/", (req, res) => {
   console.log(req.body);
   res.json(req.body);
+});
+
+app.use((error, req, res, next) => {
+  res.status(err.status || 500);
+  res.send(error.message || "서버에서 에러가 발생되었습니다.");
 });
 
 app.use(express.static(path.join(__dirname, "../uploads")));
