@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../store/thunkFunction";
+import { AppDispatch } from "../../store";
 
-interface AuthProps {
+export interface AuthProps {
   email: string;
   name: string;
   password: string;
 }
 
 const RegisterPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const {
     register,
     handleSubmit,
@@ -15,6 +20,14 @@ const RegisterPage = () => {
   } = useForm<AuthProps>({ mode: "onChange" });
 
   const onSubmit = ({ email, password, name }: AuthProps) => {
+    const body = {
+      email,
+      password,
+      name,
+      image: "https/via/placeholder.com/600x400?text=no+user+image",
+    };
+
+    dispatch(registerUser(body));
     reset();
   };
 

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { StateProps } from "../utils/types";
+import { registerUser } from "./thunkFunction";
 
 const initialState: StateProps = {
   userData: {
@@ -19,7 +20,17 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder;
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
