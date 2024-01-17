@@ -2,12 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../store/thunkFunction";
 import { AppDispatch } from "../../store";
-
-export interface AuthProps {
-  email: string;
-  name: string;
-  password: string;
-}
+import { AuthProps } from "../../utils/types";
 
 const RegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();

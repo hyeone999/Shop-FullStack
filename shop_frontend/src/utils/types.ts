@@ -12,3 +12,9 @@ interface User {
   role: number;
   image: string;
 }
+
+export interface AuthProps {
+  email: string;
+  name: string;
+  password: string;
+}
