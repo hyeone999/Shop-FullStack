@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axios";
-import { AuthProps } from "../pages/RegisterPage";
 import { AxiosError } from "axios";
+import { AuthProps } from "../utils/types";
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
