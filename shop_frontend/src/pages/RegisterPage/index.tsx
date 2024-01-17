@@ -7,6 +7,7 @@ import { AuthProps } from "../../utils/types";
 const RegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -14,6 +15,7 @@ const RegisterPage = () => {
     reset,
   } = useForm<AuthProps>({ mode: "onChange" });
 
+  // 회원가입 기능
   const onSubmit = ({ email, password, name }: AuthProps) => {
     const body = {
       email,
@@ -26,6 +28,7 @@ const RegisterPage = () => {
     reset();
   };
 
+  // input 유효성 검사
   const userEmail = {
     required: "필수 필드입니다.",
   };
@@ -47,6 +50,7 @@ const RegisterPage = () => {
       <div className="p-6 bg-white rounded-md shadow-md">
         <h1 className="text-3xl font-semibold text-center">회원가입</h1>
         <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+          {/* email */}
           <div className="mb-2">
             <label htmlFor="" className="text-sm font-semibold text-gray-800">
               Email
@@ -63,6 +67,7 @@ const RegisterPage = () => {
               </div>
             )}
           </div>
+          {/* name */}
           <div className="mb-2">
             <label htmlFor="" className="text-sm font-semibold text-gray-800">
               Name
@@ -79,6 +84,8 @@ const RegisterPage = () => {
               </div>
             )}
           </div>
+
+          {/* password */}
           <div className="mb-2">
             <label htmlFor="" className="text-sm font-semibold text-gray-800">
               Password
@@ -95,6 +102,8 @@ const RegisterPage = () => {
               </div>
             )}
           </div>
+
+          {/* 회원가입 button */}
           <div className="mt-6">
             <button
               type="submit"
@@ -103,6 +112,8 @@ const RegisterPage = () => {
               회원가입
             </button>
           </div>
+
+          {/* 이미 아이디가 있을 경우 */}
           <p className="mt-8 text-xs font-light text-center text-gray-700">
             아이디가 있다면?{" "}
             <a href="/login" className="font-medium hover:underline">
