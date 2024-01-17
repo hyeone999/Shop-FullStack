@@ -67,6 +67,7 @@ const RegisterPage = () => {
               </div>
             )}
           </div>
+
           {/* name */}
           <div className="mb-2">
             <label htmlFor="" className="text-sm font-semibold text-gray-800">
