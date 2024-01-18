@@ -13,7 +13,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post("/login", async (req, res) => {
   try {
     // 유저가 존재하는지 check
     const user = await User.findOne({ email: req.body.email });
