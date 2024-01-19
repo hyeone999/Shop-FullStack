@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -6,6 +6,10 @@ import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store";
+import { authUser } from "./store/thunkFunction";
 
 const Layout = () => {
   return (
@@ -28,6 +32,17 @@ const Layout = () => {
 };
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+  const isAuth = useSelector((state: RootState) => state.user?.isAuth);
+  const { pathname } = useLocation();
+
+  // Auth가 true일때만 인증 확인 진행
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(authUser());
+    }
+  }, [isAuth, pathname, dispatch]);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
