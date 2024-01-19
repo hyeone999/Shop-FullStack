@@ -40,3 +40,22 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
+// 인증 API
+export const authUser = createAsyncThunk(
+  "user/authUser",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get("/users/auth");
+
+      return response.data; // payload
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log(error);
+
+      return thunkAPI.rejectWithValue(
+        axiosError.response?.data || axiosError.message
+      );
+    }
+  }
+);
