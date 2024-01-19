@@ -59,3 +59,22 @@ export const authUser = createAsyncThunk(
     }
   }
 );
+
+// 로그아웃 API
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/users/logout");
+
+      return response.data; // payload
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log(error);
+
+      return thunkAPI.rejectWithValue(
+        axiosError.response?.data || axiosError.message
+      );
+    }
+  }
+);
