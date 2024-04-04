@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../store/thunkFunction";
 import { AppDispatch } from "../../store";
 import { AuthProps } from "../../utils/types";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   // react-hook-form
@@ -26,6 +28,9 @@ const RegisterPage = () => {
 
     dispatch(registerUser(body));
     reset();
+
+    // 회원가입 성공시 루트로 navigate
+    navigate("/");
   };
 
   // input 유효성 검사
