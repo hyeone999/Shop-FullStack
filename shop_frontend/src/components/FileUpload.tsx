@@ -28,6 +28,13 @@ const FileUpload = ({ images, onImageChange }: FileUploadProps) => {
     }
   };
 
+  // 사진 삭제 기능
+  const handleDelete = (idx: number) => {
+    const newImages = [...images];
+    newImages.splice(idx, 1);
+    onImageChange(newImages);
+  };
+
   return (
     <div className="flex gap-4">
       <Dropzone onDrop={handleDrop}>
@@ -42,7 +49,7 @@ const FileUpload = ({ images, onImageChange }: FileUploadProps) => {
       </Dropzone>
       <div className="flex-grow h-[300px] border flex items-center justify-center overflow-x-scroll overflow-y-hidden">
         {images.map((image: string, index: number) => (
-          <div key={index}>
+          <div key={index} onClick={() => handleDelete(index)}>
             <img
               className="min-w-[300px] h-[300px]"
               src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
