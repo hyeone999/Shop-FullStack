@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axiosInstance from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import FileUpload from "../../components/FileUpload";
 
 const UploadProductPage = () => {
   // input과 select 둘 다 type 호환시켜주기
@@ -15,7 +16,7 @@ const UploadProductPage = () => {
     description: "",
     price: 0,
     continents: 1,
-    images: [],
+    images: [] as string[],
   });
 
   const userData = useSelector((state: RootState) => state.user?.userData);
@@ -27,6 +28,14 @@ const UploadProductPage = () => {
     setProduct((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  // 상품 image upload
+  const handleImages = (newImages: string[]) => {
+    setProduct((prev) => ({
+      ...prev,
+      images: newImages,
     }));
   };
 
@@ -53,6 +62,8 @@ const UploadProductPage = () => {
       </div>
 
       <form className="mt-6" onSubmit={handleSubmit}>
+        <FileUpload images={product.images} onImageChange={handleImages} />
+
         <div className="mt-4">
           <label htmlFor="title">이름</label>
           <input
