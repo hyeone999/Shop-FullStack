@@ -28,7 +28,7 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
-        toast.info("회원가입을 성공했습니다.");
+        toast.info("회원가입에 성공했습니다.");
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;

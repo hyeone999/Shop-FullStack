@@ -18,3 +18,8 @@ export interface AuthProps {
   name?: string; // name -> 회원가입시 필수/로그인시 없음
   password: string;
 }
+
+export type FileUploadProps = {
+  images: string[];
+  onImageChange: (newImages: string[]) => void;
+};
