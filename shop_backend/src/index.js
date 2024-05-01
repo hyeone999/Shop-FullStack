@@ -16,6 +16,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/users", require("./routes/users"));
+app.use("/products", require("./routes/product"));
 
 app.use(express.static(path.join(__dirname, "../uploads")));
 
