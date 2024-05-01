@@ -23,3 +23,11 @@ export type FileUploadProps = {
   images: string[];
   onImageChange: (newImages: string[]) => void;
 };
+
+export interface FetchProductOptions {
+  skip: number;
+  limit: number;
+  loadMore?: boolean;
+  filters?: any; // 필터의 타입은 상황에 따라 다를 수 있음
+  searchTerm?: string;
+}
