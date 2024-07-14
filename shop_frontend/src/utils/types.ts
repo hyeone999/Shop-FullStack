@@ -33,6 +33,7 @@ export interface FetchProductOptions {
 }
 
 export interface Product {
+  _id: string;
   title: string;
   description: string;
   continents: number;
