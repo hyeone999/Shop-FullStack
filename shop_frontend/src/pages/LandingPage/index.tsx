@@ -4,11 +4,11 @@ import CheckBox from "./Sections/CheckBox";
 import RadioBox from "./Sections/RadioBox";
 import SearchInput from "./Sections/SearchInput";
 import axiosInstance from "../../utils/axios";
-import { FetchProductOptions } from "../../utils/types";
+import { FetchProductOptions, Product } from "../../utils/types";
 
 const LandingPage = () => {
   const limit = 4;
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [filters, setFiters] = useState({
@@ -36,13 +36,33 @@ const LandingPage = () => {
       searchTerm,
     };
 
+    // asc : 오름차순
+    // desc : 내림차순
     try {
       const response = await axiosInstance.get("/products", { params });
 
-      setProduct(response.data);
+      if (loadMore) {
+        setProducts([...products, ...response.data.products]);
+      } else {
+        setProducts(response.data.products);
+      }
+
+      setHasMore(response.data.hasMore);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleLoadMore = () => {
+    const body = {
+      skip: skip + limit,
+      limit,
+      loadMore: true,
+      filters,
+    };
+
+    fetchProduct(body);
+    setSkip(skip + limit);
   };
 
   return (
@@ -68,8 +88,8 @@ const LandingPage = () => {
 
         {/* Card */}
         <div className="gird grid-cols-2 sm:grid-cols-4 gap-4">
-          {product.map((product) => (
-            <CardItem key={product.id} product={product} />
+          {products.map(() => (
+            <CardItem key={products} product={products} />
           ))}
         </div>
 
@@ -77,7 +97,10 @@ const LandingPage = () => {
         {/* 더보기 버튼은 hasMore이 true일 때만 show */}
         {hasMore && (
           <div className="flex justify-center mt-5">
-            <button className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500">
+            <button
+              onClick={handleLoadMore}
+              className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500"
+            >
               더 보기
             </button>
           </div>
