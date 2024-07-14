@@ -11,7 +11,7 @@ const LandingPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
-  const [filters, setFiters] = useState({
+  const [filters, setFilters] = useState({
     continents: [],
     price: [],
   });
@@ -87,9 +87,9 @@ const LandingPage = () => {
         </div>
 
         {/* Card */}
-        <div className="gird grid-cols-2 sm:grid-cols-4 gap-4">
-          {products.map(() => (
-            <CardItem key={products} product={products} />
+        <div className="gird grid-cols-2 gap-4 sm:grid-cols-4">
+          {products?.map((product) => (
+            <CardItem key={product._id} product={product} />
           ))}
         </div>
 

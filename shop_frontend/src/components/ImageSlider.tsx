@@ -1,17 +1,15 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
-const ImageSlider = ({ images }: any) => {
+const ImageSlider = ({ images }: { images: string[] }) => {
   return (
     <Carousel autoPlay showThumbs={false} infiniteLoop>
-      {images.map((image: string) => (
-        <div key={image}>
+      {images.map((image, idx) => (
+        <div key={idx}>
           <img
-            src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
-            alt={image}
             className="w-full max-h-[150px]"
+            src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
           />
-          <p className="legend">Legend 1</p>
         </div>
       ))}
     </Carousel>
