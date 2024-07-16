@@ -33,9 +33,21 @@ export interface FetchProductOptions {
 }
 
 export interface Product {
+  _id: string;
   title: string;
   description: string;
   continents: number;
   price: number;
   images: string[];
+}
+
+export interface CheckBoxProps {
+  continents: { _id: number; name: string }[];
+  checkedContinents: number[];
+  onFilters: (filters: number[]) => void;
+}
+
+export interface Filters {
+  continents: number[];
+  price: number[];
 }

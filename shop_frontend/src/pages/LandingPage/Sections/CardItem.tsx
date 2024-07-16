@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import ImageSlider from "../../../components/ImageSlider";
+import { Product } from "../../../utils/types";
 
-const CardItem = ({ product }: any) => {
+const CardItem = ({ product }: { product: Product }) => {
   return (
     <div className="border-[1px] border-gray-300">
       <ImageSlider images={product.images} />
