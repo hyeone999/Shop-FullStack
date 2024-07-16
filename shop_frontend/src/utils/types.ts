@@ -40,3 +40,14 @@ export interface Product {
   price: number;
   images: string[];
 }
+
+export interface CheckBoxProps {
+  continents: { _id: number; name: string }[];
+  checkedContinents: number[];
+  onFilters: (filters: number[]) => void;
+}
+
+export interface Filters {
+  continents: number[];
+  price: number[];
+}
