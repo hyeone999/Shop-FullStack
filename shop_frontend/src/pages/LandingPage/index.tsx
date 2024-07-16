@@ -4,14 +4,15 @@ import CheckBox from "./Sections/CheckBox";
 import RadioBox from "./Sections/RadioBox";
 import SearchInput from "./Sections/SearchInput";
 import axiosInstance from "../../utils/axios";
-import { FetchProductOptions, Product } from "../../utils/types";
+import { FetchProductOptions, Filters, Product } from "../../utils/types";
+import { continents } from "../../utils/filterData";
 
 const LandingPage = () => {
   const limit = 4;
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     continents: [],
     price: [],
   });
@@ -65,6 +66,28 @@ const LandingPage = () => {
     setSkip(skip + limit);
   };
 
+  const handleFilters = (
+    newFilteredData: number[],
+    category: keyof Filters
+  ) => {
+    const newFilters = { ...filters };
+    newFilters[category] = newFilteredData;
+
+    showFilteredResults(newFilters);
+    setFilters(newFilters);
+  };
+
+  const showFilteredResults = (filters: Filters) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters,
+    };
+
+    fetchProduct(body);
+    setSkip(0);
+  };
+
   return (
     <section className="text-center m-7">
       <div className="text-2xl">
@@ -73,7 +96,11 @@ const LandingPage = () => {
         {/* Filter */}
         <div className="flex gpa-3">
           <div className="w-1/2">
-            <CheckBox />
+            <CheckBox
+              continents={continents}
+              checkedContinents={filters.continents}
+              onFilters={(filters) => handleFilters(filters, "continents")}
+            />
           </div>
 
           <div className="w-1/2">
