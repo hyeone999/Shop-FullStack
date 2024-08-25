@@ -5,7 +5,7 @@ import RadioBox from "./Sections/RadioBox";
 import SearchInput from "./Sections/SearchInput";
 import axiosInstance from "../../utils/axios";
 import { FetchProductOptions, Filters, Product } from "../../utils/types";
-import { continents } from "../../utils/filterData";
+import { continents, prices } from "../../utils/filterData";
 
 const LandingPage = () => {
   const limit = 4;
@@ -37,8 +37,6 @@ const LandingPage = () => {
       searchTerm,
     };
 
-    // asc : 오름차순
-    // desc : 내림차순
     try {
       const response = await axiosInstance.get("/products", { params });
 
@@ -73,8 +71,25 @@ const LandingPage = () => {
     const newFilters = { ...filters };
     newFilters[category] = newFilteredData;
 
+    if (category === "price") {
+      const priceValues = handlePrice(newFilteredData);
+      newFilters[category] = priceValues;
+    }
+
     showFilteredResults(newFilters);
     setFilters(newFilters);
+  };
+
+  const handlePrice = (value: number[]) => {
+    let array: number[] = [];
+
+    for (const key in prices) {
+      if (prices[key]._id === value[0]) {
+        array = prices[key].array;
+      }
+    }
+
+    return array;
   };
 
   const showFilteredResults = (filters: Filters) => {
@@ -103,8 +118,13 @@ const LandingPage = () => {
             />
           </div>
 
+          {/* Radio */}
           <div className="w-1/2">
-            <RadioBox />
+            <RadioBox
+              prices={prices}
+              checkedPrice={filters.price}
+              onFilters={(filters) => handleFilters(filters, "price")}
+            />
           </div>
         </div>
 
