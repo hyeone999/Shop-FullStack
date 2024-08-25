@@ -51,3 +51,13 @@ export interface Filters {
   continents: number[];
   price: number[];
 }
+
+export interface PriceProps {
+  prices: {
+    _id: number;
+    name: string;
+    array: number[];
+  }[];
+  checkedPrice: number[];
+  onFilters: (filters: number[]) => void;
+}
