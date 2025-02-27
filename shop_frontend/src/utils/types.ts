@@ -75,3 +75,7 @@ export interface SearchTermProps {
   filters: Filters; // 또는 적절한 타입
   searchTerm: string;
 }
+
+export interface ProductProps {
+  product: Product | null;
+}
