@@ -65,6 +65,7 @@ const LandingPage = () => {
       limit,
       loadMore: true,
       filters,
+      searchTerm,
     };
 
     fetchProduct(body);
@@ -104,6 +105,7 @@ const LandingPage = () => {
       skip: 0,
       limit,
       filters,
+      searchTerm,
     };
 
     fetchProduct(body);
