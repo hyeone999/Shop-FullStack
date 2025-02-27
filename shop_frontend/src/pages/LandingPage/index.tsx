@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import CardItem from "./Sections/CardItem";
 import CheckBox from "./Sections/CheckBox";
 import RadioBox from "./Sections/RadioBox";
 import SearchInput from "./Sections/SearchInput";
 import axiosInstance from "../../utils/axios";
-import { FetchProductOptions, Filters, Product } from "../../utils/types";
+import {
+  FetchProductOptions,
+  Filters,
+  Product,
+  SearchTermProps,
+} from "../../utils/types";
 import { continents, prices } from "../../utils/filterData";
 
 const LandingPage = () => {
   const limit = 4;
+  const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -104,6 +110,19 @@ const LandingPage = () => {
     setSkip(0);
   };
 
+  const handleSearchTerm = (event: ChangeEvent<HTMLInputElement>) => {
+    const body: SearchTermProps = {
+      skip: 0,
+      limit,
+      filters,
+      searchTerm: event.target.value,
+    };
+
+    setSkip(0);
+    setSearchTerm(event.target.value);
+    fetchProduct(body);
+  };
+
   return (
     <section className="text-center m-7">
       <div className="text-2xl">
@@ -131,7 +150,7 @@ const LandingPage = () => {
 
         {/* Search */}
         <div className="flex justify-end">
-          <SearchInput />
+          <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm} />
         </div>
 
         {/* Card */}
