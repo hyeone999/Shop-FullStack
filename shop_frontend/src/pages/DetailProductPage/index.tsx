@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axios";
 import { Product } from "../../utils/types";
+import ProductImage from "./Sections/ProductImage";
+import ProductInfo from "./Sections/ProductInfo";
 
 const DetailProductPage = () => {
   const { productId } = useParams();
@@ -29,8 +31,14 @@ const DetailProductPage = () => {
       </div>
 
       <div className="flex gap-4">
-        <div className="w-1/2">{/* ProductImage */}</div>
-        <div className="w-1/2">{/* ProductInfo */}</div>
+        <div className="w-1/2">
+          {/* ProductImage */}
+          <ProductImage product={product} />
+        </div>
+        <div className="w-1/2">
+          {/* ProductInfo */}
+          <ProductInfo product={product} />
+        </div>
       </div>
     </section>
   );
