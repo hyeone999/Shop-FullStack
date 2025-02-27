@@ -20,6 +20,7 @@ const LandingPage = () => {
   // 컴포넌트 mount 될 때 한 번만 실행
   useEffect(() => {
     fetchProduct({ skip, limit });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 상품 목록 가져오기
