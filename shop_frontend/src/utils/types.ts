@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface StateProps {
   userData: User;
   isAuth: boolean;
@@ -60,4 +62,16 @@ export interface PriceProps {
   }[];
   checkedPrice: number[];
   onFilters: (filters: number[]) => void;
+}
+
+export interface SearchProps {
+  searchTerm: string;
+  onSearch: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface SearchTermProps {
+  skip: number;
+  limit: number;
+  filters: Filters; // 또는 적절한 타입
+  searchTerm: string;
 }
