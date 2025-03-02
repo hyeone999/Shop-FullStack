@@ -9,7 +9,9 @@ const CardItem = ({ product }: { product: Product }) => {
       <ImageSlider images={product.images} />
       <Link to={`/product/${product._id}`}>
         <p className="p-1">{product.title}</p>
-        <p className="p-1 text-sm">{continents[product.continents]?.name}</p>
+        <p className="p-1 text-sm">
+          {continents.find((v) => v._id === product.continents)?.name}
+        </p>
         <p className="p-1 text-xs text-gray-500">{product.price}</p>
       </Link>
     </div>
