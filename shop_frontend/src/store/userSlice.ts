@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { StateProps } from "../utils/types";
-import { authUser, loginUser, logoutUser, registerUser } from "./thunkFunction";
+import {
+  addToCart,
+  authUser,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "./thunkFunction";
 import { toast } from "react-toastify";
 
 const initialState: StateProps = {
@@ -10,6 +16,7 @@ const initialState: StateProps = {
     name: "",
     role: 0,
     image: "",
+    cart: [],
   },
   isAuth: false,
   isLoading: false,
@@ -73,7 +80,7 @@ const userSlice = createSlice({
         localStorage.removeItem("accessToken");
       })
 
-      // 로그아웃
+      // logout
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -86,6 +93,21 @@ const userSlice = createSlice({
         localStorage.removeItem("accessToken");
       })
       .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        toast.error(action.payload as string);
+      })
+
+      // cart
+      .addCase(addToCart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addToCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userData.cart = action.payload;
+        toast.info("장바구니에 추가되었습니다.");
+      })
+      .addCase(addToCart.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
         toast.error(action.payload as string);

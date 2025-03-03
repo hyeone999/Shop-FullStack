@@ -78,3 +78,22 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
+
+// 장바구니 API
+export const addToCart = createAsyncThunk(
+  "user/addToCart",
+  async (body: { productId: string | undefined }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/users/cart", body);
+
+      return response.data; // payload
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log(error);
+
+      return thunkAPI.rejectWithValue(
+        axiosError.response?.data || axiosError.message
+      );
+    }
+  }
+);
