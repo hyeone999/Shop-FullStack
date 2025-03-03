@@ -13,6 +13,7 @@ interface User {
   name: string;
   role: number;
   image: string;
+  cart: [];
 }
 
 export interface AuthProps {
@@ -41,6 +42,7 @@ export interface Product {
   continents: number;
   price: number;
   images: string[];
+  sold: number;
 }
 
 export interface CheckBoxProps {
