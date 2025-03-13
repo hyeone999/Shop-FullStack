@@ -3,6 +3,7 @@ import { StateProps } from "../utils/types";
 import {
   addToCart,
   authUser,
+  getCartItems,
   loginUser,
   logoutUser,
   registerUser,
@@ -21,6 +22,7 @@ const initialState: StateProps = {
   isAuth: false,
   isLoading: false,
   error: "",
+  cartDetail: [],
 };
 
 const userSlice = createSlice({
@@ -108,6 +110,20 @@ const userSlice = createSlice({
         toast.info("장바구니에 추가되었습니다.");
       })
       .addCase(addToCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        toast.error(action.payload as string);
+      })
+
+      // cartItems
+      .addCase(getCartItems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCartItems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cartDetail = action.payload;
+      })
+      .addCase(getCartItems.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
         toast.error(action.payload as string);

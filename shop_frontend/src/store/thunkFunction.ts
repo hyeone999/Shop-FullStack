@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axios";
 import { AxiosError } from "axios";
-import { AuthProps } from "../utils/types";
+import { AuthProps, CartProps, Product } from "../utils/types";
 
 // 회원가입 API
 export const registerUser = createAsyncThunk(
@@ -79,12 +79,44 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-// 장바구니 API
+// 장바구니 추가 API
 export const addToCart = createAsyncThunk(
   "user/addToCart",
   async (body: { productId: string | undefined }, thunkAPI) => {
     try {
       const response = await axiosInstance.post("/users/cart", body);
+
+      return response.data; // payload
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log(error);
+
+      return thunkAPI.rejectWithValue(
+        axiosError.response?.data || axiosError.message
+      );
+    }
+  }
+);
+
+// 장바구니 API
+export const getCartItems = createAsyncThunk(
+  "user/getCartItems",
+  async (
+    { cartItemIds, userCart }: { cartItemIds: string[]; userCart: CartProps[] },
+    thunkAPI
+  ) => {
+    try {
+      const response = await axiosInstance.get(
+        `/products/${cartItemIds}?type=array`
+      );
+
+      userCart.forEach((cartItem) => {
+        response.data.forEach((productDetail: Product, index: number) => {
+          if (cartItem.id === productDetail._id) {
+            response.data[index].quantity = cartItem.quantity;
+          }
+        });
+      });
 
       return response.data; // payload
     } catch (error) {
