@@ -5,6 +5,7 @@ export interface StateProps {
   isAuth: boolean;
   isLoading: boolean;
   error: string;
+  cartDetail: [];
 }
 
 interface User {
@@ -13,7 +14,7 @@ interface User {
   name: string;
   role: number;
   image: string;
-  cart: [];
+  cart: CartProps[];
 }
 
 export interface AuthProps {
@@ -80,4 +81,10 @@ export interface SearchTermProps {
 
 export interface ProductProps {
   product: Product | null;
+}
+
+export interface CartProps {
+  id: string;
+  quantity: number;
+  date: number;
 }
